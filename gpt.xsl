@@ -4,7 +4,7 @@
     
     <xsl:output method="html" indent="yes"/>
 
-    <xsl:template match="/">
+    <xsl:template match="//step[message_type='OrderClearingCheck']">
         <html>
             <head>
                 <title>XML to HTML Table</title>
