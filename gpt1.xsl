@@ -29,13 +29,9 @@
                 <br/>
                 <xsl:for-each select="//step">
                     <xsl:choose>
-                        <xsl:when test="message_type='OrderClearingCheck'">
+                        <xsl:when test="message_type='UploadStartData'">
                             <h2><xsl:value-of select="description"/></h2>
-                            <xsl:apply-templates select="." mode="OrderClearingCheck"/>
-                        </xsl:when>
-                        <xsl:when test="message_type='GetAllCollateralPositions'">
-                            <h2><xsl:value-of select="description"/></h2>
-                            <xsl:apply-templates select="." mode="GetAllCollateralPositions"/>
+                            <xsl:apply-templates select="." mode="UploadStartData"/>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:for-each>
@@ -187,5 +183,45 @@
             </tr>
         </table>
     </xsl:template>
+    
+<xsl:template match="//step[message_type='UploadStartData']" mode="UploadStartData">
+  <table id="organization_table">
+    <caption>Организация</caption>
+    <thead>
+      <tr>
+        <th>Index</th>
+        <th>Идентификатор организации</th>
+        <th>ИНН</th>
+        <th>ТИН</th>
+        <th>Код допуска к клирингу</th>
+        <th>Участник клиринга</th>
+        <th>Участник торгов</th>
+        <th>Клиринговая организация</th>
+        <th>Доверительное управление</th>
+        <th>Ликвидационный неттинг</th>
+        <th>Идентификатор шарда</th>
+      </tr>
+    </thead>
+    <tbody>
+  <tr>
+    <td><xsl:value-of select="position() - 1"/></td>
+    <td><xsl:value-of select="organization_id"/></td>
+    <td><xsl:value-of select="inn"/></td>
+    <td><xsl:value-of select="tin"/></td>
+    <td><xsl:value-of select="access_code"/></td>
+    <td><xsl:value-of select="is_clearing_member"/></td>
+    <td><xsl:value-of select="is_bidder"/></td>
+    <td><xsl:value-of select="is_clearing_org"/></td>
+    <td><xsl:value-of select="is_trust_management"/></td>
+    <td><xsl:value-of select="is_liq_netting"/></td>
+    <td><xsl:value-of select="bucket_id"/></td>
+  </tr>
+    </tbody>
+  </table>
+</xsl:template>
 
+
+
+
+    
 </xsl:stylesheet>
