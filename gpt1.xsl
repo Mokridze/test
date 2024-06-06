@@ -69,6 +69,8 @@
                     <h2><xsl:value-of select="description"/></h2>
                     <xsl:apply-templates select="message_type='UploadStartData'" mode="Portfolio"/>
                 </xsl:for-each>
+<h1>TEST</h1>
+                <xsl:apply-templates select="//step/message_type='UploadStartData'" mode="Portfolio"/>
 
                 
                 <h1>Ожидаемые результаты</h1>
@@ -271,7 +273,7 @@
       </tr>
     </thead>
     <tbody>
-        <xsl:for-each select = "//step/message/data/portfolio">
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/portfolio">
   <tr>
 <td><xsl:value-of select="portfolio_that_opened_for_organization_id"/></td>
 <td><xsl:value-of select="clearing_member_organization_id"/></td>
