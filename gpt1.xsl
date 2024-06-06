@@ -60,6 +60,10 @@
                             <h2><xsl:value-of select="description"/></h2>
                             <xsl:apply-templates select="." mode="UploadStartData"/>
                         </xsl:when>
+                        <xsl:when test="message_type='UploadStartData'">
+                            <h2><xsl:value-of select="description"/></h2>
+                            <xsl:apply-templates select="." mode="UploadStartData"/>
+                        </xsl:when>
                     </xsl:choose>
                 </xsl:for-each>
 
@@ -247,7 +251,39 @@
   </table>
 </xsl:template>
 
-
+<xsl:template match="//step[message_type='UploadStartData']" mode="UploadStartData">
+  <table>
+    <caption>Портфель</caption>
+    <thead>
+      <tr>
+      <th>Порфтель открыт для организации</th>
+      <th>Организация участник клиринга</th>
+      <th>Идентификатор портфеля</th>
+      <th>Тип портфеля</th>
+      <th>Портфель вышестоящего уровня</th>
+      <th>Портфель открыт для участника клиринга</th>
+      <th>Режим урегулирования</th>
+      <th>Активный статус</th>
+      <th>Идентификатор корневого портфеля</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step/message/data/portfolio">
+  <tr>
+<td><xsl:value-of select="portfolio_that_opened_for_organization_id"/></td>
+<td><xsl:value-of select="clearing_member_organization_id"/></td>
+<td><xsl:value-of select="portfolio_id"/></td>
+<td><xsl:value-of select="portfolio_type"/></td>
+<td><xsl:value-of select="high_level_portfolio_id"/></td>
+<td><xsl:value-of select="opened_portfolio_for_trading_member_id"/></td>
+<td><xsl:value-of select="is_settlement_regime"/></td>
+<td><xsl:value-of select="is_active_status"/></td>
+<td><xsl:value-of select="root_portfolio_id"/></td>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
 
 
     
