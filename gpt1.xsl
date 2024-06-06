@@ -47,7 +47,6 @@
             <caption>Запрос</caption>
             <thead>
                 <tr>
-                    <th class="blank level0">&nbsp;</th>
                     <th class="col_heading level0">Описание</th>
                     <th class="col_heading level0">Тип сообщения</th>
                     <th class="col_heading level0">Операция</th>
@@ -83,7 +82,6 @@
             </thead>
             <tbody>
                 <tr>
-                    <th class="row_heading level0">0</th>
                     <td class="data">Проверка заявки_1</td>
                     <td class="data">OrderClearingCheck</td>
                     <td class="data"><xsl:value-of select="action"/></td>
