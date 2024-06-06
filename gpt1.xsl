@@ -21,7 +21,29 @@
                     th {
                         background-color: #f2f2f2;
                     }
-                    caption {
+                    {
+  margin: 0;
+  font-family: "Helvetica", "Arial", sans-serif;
+  border-collapse: collapse;
+  border: none;
+}
+ tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+ tbody tr:nth-child(odd) {
+  background-color: #eee;
+}
+ td {
+  padding: .5em;
+  border: 1px solid #8A8A8A;
+}
+ th {
+  font-size: 100%;
+  text-align: right;
+  padding: .5em;
+  border: 1px solid #8A8A8A;
+}
+ caption {
   font-weight: bold;
   font-size: 18px;
   text-align: left;
