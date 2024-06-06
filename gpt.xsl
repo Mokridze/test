@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0"
+<xsl:stylesheet version="2.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     
     <xsl:output method="html" indent="yes"/>
@@ -49,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <xsl:for-each select="//step[message_type='OrderClearingCheck']">
+                        <xsl:for-each-group select="//step[message_type='OrderClearingCheck']">
                             <tr>
                                 <td><xsl:value-of select="description"/></td>
                                 <td><xsl:value-of select="message_type"/></td>
