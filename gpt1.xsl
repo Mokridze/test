@@ -65,6 +65,8 @@
                             <xsl:apply-templates select="." mode="Portfolio"/>
                         </xsl:when>
                     </xsl:choose>
+                    <h2><xsl:value-of select="description"/></h2>
+                    <xsl:apply-templates select="message_type='UploadStartData'" mode="Portfolio"/>
                 </xsl:for-each>
 
                 
