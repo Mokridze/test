@@ -7,7 +7,7 @@
     <xsl:template match="/">
         <html>
             <head>
-                <title>base-uri()</title>
+                
                 <style>
                     table {
                         width: 100%;
