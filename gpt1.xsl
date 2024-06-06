@@ -7,7 +7,7 @@
     <xsl:template match="/">
         <html>
             <head>
-                
+                <title>XML Transform</title>
                 <style>
                     table {
                         width: 100%;
