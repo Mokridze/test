@@ -49,7 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <xsl:for-each select="//step">
+                        <xsl:for-each select="//step[message_type='OrderClearingCheck']">
                             <tr>
                                 <td><xsl:value-of select="description"/></td>
                                 <td><xsl:value-of select="message_type"/></td>
