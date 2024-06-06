@@ -7,7 +7,7 @@
     <xsl:template match="/">
         <html>
             <head>
-                <title>XML to HTML Transformation</title>
+                <title>base-uri()</title>
                 <style>
                     table {
                         width: 100%;
@@ -25,6 +25,8 @@
             </head>
             <body>
                 <!-- Process all steps in the order they appear -->
+                <h1>Стартовые данные</h1>
+                <br/>
                 <xsl:for-each select="//step">
                     <xsl:choose>
                         <xsl:when test="message_type='OrderClearingCheck'">
@@ -37,6 +39,25 @@
                         </xsl:when>
                     </xsl:choose>
                 </xsl:for-each>
+
+                
+                <h1>Ожидаемые результаты</h1>
+                <br/>
+                <xsl:for-each select="//step">
+                    <xsl:choose>
+                        <xsl:when test="message_type='OrderClearingCheck'">
+                            <h2><xsl:value-of select="description"/></h2>
+                            <xsl:apply-templates select="." mode="OrderClearingCheck"/>
+                        </xsl:when>
+                        <xsl:when test="message_type='GetAllCollateralPositions'">
+                            <h2><xsl:value-of select="description"/></h2>
+                            <xsl:apply-templates select="." mode="GetAllCollateralPositions"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:for-each>
+                
+
+                
             </body>
         </html>
     </xsl:template>
