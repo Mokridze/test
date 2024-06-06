@@ -82,40 +82,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="data">Проверка заявки_1</td>
-                    <td class="data">OrderClearingCheck</td>
-                    <td class="data"><xsl:value-of select="action"/></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                </tr>
-                <tr>
-                    <th class="row_heading level0">1</th>
-                    <td class="data">Проверка заявки_1</td>
+                    <th class="row_heading level0"></th>
+                    <td class="data">"description"</td>
                     <td class="data"></td>
                     <td class="data"></td>
                     <td class="data"><xsl:value-of select="message/request_id"/></td>
