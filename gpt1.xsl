@@ -202,6 +202,7 @@
       </tr>
     </thead>
     <tbody>
+        <xsl:for-each select=".">
   <tr>
     <td><xsl:value-of select="message/data/organization/organization_id"/></td>
     <td><xsl:value-of select="inn"/></td>
@@ -214,6 +215,7 @@
     <td><xsl:value-of select="is_liq_netting"/></td>
     <td><xsl:value-of select="bucket_id"/></td>
   </tr>
+            </xsl:for-each>
     </tbody>
   </table>
 </xsl:template>
