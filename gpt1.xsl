@@ -69,7 +69,7 @@
                     
                 </xsl:for-each>
 <h1>TEST</h1>
-<xsl:apply-templates select="//*[@message_type='UploadStartData']" mode="Portfolio"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="Portfolio"/>
 
 
                 
