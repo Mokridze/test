@@ -58,11 +58,11 @@
                     <xsl:choose>
                         <xsl:when test="message_type='UploadStartData'">
                             <h2><xsl:value-of select="description"/></h2>
-                            <xsl:apply-templates select="." mode="UploadStartData"/>
+                            <xsl:apply-templates select="." mode="Organization"/>
                         </xsl:when>
                         <xsl:when test="message_type='UploadStartData'">
                             <h2><xsl:value-of select="description"/></h2>
-                            <xsl:apply-templates select="." mode="UploadStartData"/>
+                            <xsl:apply-templates select="." mode="Portfolio"/>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:for-each>
@@ -215,7 +215,7 @@
         </table>
     </xsl:template>
     
-<xsl:template match="//step[message_type='UploadStartData']" mode="UploadStartData">
+<xsl:template match="//step[message_type='UploadStartData']" mode="Organization">
   <table>
     <caption>Организация</caption>
     <thead>
@@ -251,7 +251,7 @@
   </table>
 </xsl:template>
 
-<xsl:template match="//step[message_type='UploadStartData']" mode="UploadStartData">
+<xsl:template match="//step[message_type='UploadStartData']" mode="Portfolio">
   <table>
     <caption>Портфель</caption>
     <thead>
