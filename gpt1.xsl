@@ -189,7 +189,6 @@
     <caption>Организация</caption>
     <thead>
       <tr>
-        <th>Index</th>
         <th>Идентификатор организации</th>
         <th>ИНН</th>
         <th>ТИН</th>
@@ -204,7 +203,6 @@
     </thead>
     <tbody>
   <tr>
-    <td><xsl:value-of select="position() - 1"/></td>
     <td><xsl:value-of select="message/data/organization/organization_id"/></td>
     <td><xsl:value-of select="inn"/></td>
     <td><xsl:value-of select="tin"/></td>
