@@ -202,9 +202,9 @@
       </tr>
     </thead>
     <tbody>
-        <xsl:for-each>
+        <xsl:for-each select = "//step/message/data/organization">
   <tr>
-    <td><xsl:value-of select="message/data/organization/organization_id"/></td>
+    <td><xsl:value-of select="organization_id"/></td>
     <td><xsl:value-of select="inn"/></td>
     <td><xsl:value-of select="tin"/></td>
     <td><xsl:value-of select="access_code"/></td>
