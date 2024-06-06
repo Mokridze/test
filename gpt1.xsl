@@ -27,10 +27,10 @@
   border-collapse: collapse;
   border: none;
 }
- tbody tr:nth-child(even) {
+ tbody tr:nth-child(odd) {
   background-color: #fff;
 }
- tbody tr:nth-child(odd) {
+ tbody tr:nth-child(even) {
   background-color: #eee;
 }
  td {
