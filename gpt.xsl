@@ -81,7 +81,7 @@
                                 <td><xsl:value-of select="message/sent_to_clearing_at/seconds"/></td>
                                 <td><xsl:value-of select="message/sent_to_clearing_at/nanos"/></td>
                             </tr>
-                        </xsl:for-each>
+                        </xsl:for-each-group>
                     </tbody>
                 </table>
             </body>
