@@ -185,7 +185,7 @@
     </xsl:template>
     
 <xsl:template match="//step[message_type='UploadStartData']" mode="UploadStartData">
-  <table id="organization_table">
+  <table>
     <caption>Организация</caption>
     <thead>
       <tr>
@@ -205,7 +205,7 @@
     <tbody>
   <tr>
     <td><xsl:value-of select="position() - 1"/></td>
-    <td><xsl:value-of select="organization_id"/></td>
+    <td><xsl:value-of select="message/data/organization/organization_id"/></td>
     <td><xsl:value-of select="inn"/></td>
     <td><xsl:value-of select="tin"/></td>
     <td><xsl:value-of select="access_code"/></td>
