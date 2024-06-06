@@ -51,7 +51,7 @@
                 </style>
             </head>
             <body>
-                                <xsl:for-each select="//step">
+              <xsl:for-each select="//step">
                     <xsl:choose>
                         <xsl:when test="message_type='UploadStartData'">
                             <h2><xsl:value-of select="description"/></h2>
@@ -61,7 +61,7 @@
                     </xsl:choose>
                 </xsl:for-each>
                 
-                <!-- Process all steps in the order they appear 
+                <!-- Process all steps in the order they appear -->
                 <h1>Стартовые данные</h1>
                 <br/>
                 <xsl:for-each select="//step">
@@ -94,7 +94,7 @@
                         </xsl:when>
                     </xsl:choose>
                 </xsl:for-each>
-                -->
+                
 
                 
             </body>
