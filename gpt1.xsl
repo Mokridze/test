@@ -21,6 +21,11 @@
                     th {
                         background-color: #f2f2f2;
                     }
+                    caption {
+  font-weight: bold;
+  font-size: 18px;
+  text-align: left;
+}
                 </style>
             </head>
             <body>
