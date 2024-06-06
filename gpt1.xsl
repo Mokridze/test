@@ -51,15 +51,6 @@
                 </style>
             </head>
             <body>
-              <xsl:for-each select="//step">
-                    <xsl:choose>
-                        <xsl:when test="message_type='UploadStartData'">
-                            <h2><xsl:value-of select="description"/></h2>
-                            <xsl:apply-templates select="." mode="Organization"/>
-                            <xsl:apply-templates select="." mode="Portfolio"/>
-                        </xsl:when>
-                    </xsl:choose>
-                </xsl:for-each>
                 
                 <!-- Process all steps in the order they appear -->
                 <h1>Стартовые данные</h1>
