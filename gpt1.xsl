@@ -59,11 +59,11 @@
                     <xsl:choose>
                         <xsl:when test="message_type='UploadStartData'">
                             <h2><xsl:value-of select="description"/></h2>
-                            <xsl:apply-templates select="." mode="Organization"/>
+                            <xsl:apply-templates select="." mode="organization"/>
                         </xsl:when>
                         <xsl:when test="message_type='UploadStartData'">
                             <h2><xsl:value-of select="description"/></h2>
-                            <xsl:apply-templates select="." mode="Portfolio"/>
+                            <xsl:apply-templates select="." mode="portfolio"/>
                         </xsl:when>
                     </xsl:choose>
                     
@@ -73,6 +73,8 @@
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="portfolio"/>
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="positional_register"/>
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="collateral_register"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="collateral_position"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="trades_position"/>
 
                 
                 <h1>Ожидаемые результаты</h1>
@@ -351,4 +353,102 @@
   </table>
 </xsl:template>
 	
+		<xsl:template match="//step[message_type='UploadStartData']" mode="collateral_position">
+  <table>
+    <caption>Позиции по обеспечению</caption>
+    <thead>
+      <tr>
+      <th>Идентификатор регистра обеспечения, в рамках которого открыта позиция по обеспечению</th>
+      <th>Вид позиции по обеспечению</th>
+      <th>Идентификатор актива</th>
+      <th>Организация участник клиринга</th>
+      <th>единицы актива.входящая позиция</th>
+      <th>единицы актива.зачислено</th>
+      <th>единицы актива.списано</th>
+      <th>единицы актива.отложенные обязательства</th>
+      <th>единицы актива.средства под оплату товара</th>
+      <th>единицы актива.текущая позиция</th>
+      <th>единицы актива.маржинальное требование выставленное</th>
+      <th>единицы актива.маржинальное требование текущее</th>
+      <th>единицы актива.маржинальное требование неисполненное</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/collateral_position">
+  <tr>
+<td><xsl:value-of select="collateral_position_opened_in_collateral_register_id"/></td>
+<td><xsl:value-of select="col_pos_type"/></td>
+<td><xsl:value-of select="asset_id"/></td>
+<td><xsl:value-of select="clearing_member_organization_id"/></td>
+<td><xsl:value-of select="reg_sec_in_units.incoming_pos"/></td>
+<td><xsl:value-of select="reg_sec_in_units.credited"/></td>
+<td><xsl:value-of select="reg_sec_in_units.written_off"/></td>
+<td><xsl:value-of select="reg_sec_in_units.def_obligations"/></td>
+<td><xsl:value-of select="reg_sec_in_units.funds_for_goods"/></td>
+<td><xsl:value-of select="reg_sec_in_units.current_pos"/></td>
+<td><xsl:value-of select="reg_sec_in_units.margin_requir_placed"/></td>
+<td><xsl:value-of select="reg_sec_in_units.margin_requir_current"/></td>
+<td><xsl:value-of select="reg_sec_in_units.margin_requir_unfull"/></td>
+
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+	
+	
+			<xsl:template match="//step[message_type='UploadStartData']" mode="trades_position">
+  <table>
+    <caption>Позиции по сделкам</caption>
+    <thead>
+      <tr>
+      <th>Идентификатор позиционного регистра, в рамках которого открыта позиция по сделкам</th>
+      <th>Идентификатор финансового инструмента, предназначенного для заключения сделок</th>
+      <th>Организация участник клиринга</th>
+      <th>единицы финансового инструмента.входящая позиция по сделкам покупки</th>
+      <th>единицы финансового инструмента.входящая позиция по сделкам продажи</th>
+      <th>единицы финансового инструмента.текущая позиция по сделкам покупки</th>
+      <th>единицы финансового инструмента.текущая позиция по сделкам продажи</th>
+      <th>единицы финансового инструмента.позиция по заявкам на покупку</th>
+      <th>единицы финансового инструмента.позиция по заявкам на продажу</th>
+      <th>единицы финансового инструмента.текущая нетто-позиция</th>
+      <th>валюта сделки по фин инструменту.входящая позиция по сделкам покупки</th>
+      <th>валюта сделки по фин инструменту.входящая позиция по сделкам продажи</th>
+      <th>валюта сделки по фин инструменту.текущая позиция по сделкам покупки</th>
+      <th>валюта сделки по фин инструменту.текущая позиция по сделкам продажи</th>
+      <th>валюта сделки по фин инструменту.позиция по заявкам на покупку</th>
+      <th>валюта сделки по фин инструменту.позиция по заявкам на продажу</th>
+      <th>валюта сделки по фин инструменту.текущая нетто-позиция</th>
+      <th>валюта сделки по фин инструменту.вариационная маржа по сделкам покупки</th>
+      <th>валюта сделки по фин инструменту.вариационная маржа по сделкам продажи</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/trades_position">
+  <tr>
+<td><xsl:value-of select="trades_position_opened_in_positional_register_id"/></td>
+<td><xsl:value-of select="trades_fi_id"/></td>
+<td><xsl:value-of select="clearing_member_organization_id"/></td>
+<td><xsl:value-of select="sections_in_units.incoming_position_on_purchase_trades"/></td>
+<td><xsl:value-of select="sections_in_units.incoming_position_on_sale_trades"/></td>
+<td><xsl:value-of select="sections_in_units.current_position_on_purchase_trades"/></td>
+<td><xsl:value-of select="sections_in_units.current_position_on_sale_trades"/></td>
+<td><xsl:value-of select="sections_in_units.purchase_orders_position"/></td>
+<td><xsl:value-of select="sections_in_units.sale_orders_position"/></td>
+<td><xsl:value-of select="sections_in_units.current_net_position"/></td>
+<td><xsl:value-of select="sections_in_currency.incoming_position_on_purchase_trades"/></td>
+<td><xsl:value-of select="sections_in_currency.incoming_position_on_sale_trades"/></td>
+<td><xsl:value-of select="sections_in_currency.current_position_on_purchase_trades"/></td>
+<td><xsl:value-of select="sections_in_currency.current_position_on_sale_trades"/></td>
+<td><xsl:value-of select="sections_in_currency.purchase_orders_position"/></td>
+<td><xsl:value-of select="sections_in_currency.sale_orders_position"/></td>
+<td><xsl:value-of select="sections_in_currency.current_net_position"/></td>
+<td><xsl:value-of select="sections_in_currency.purchase_trades_variation_margin"/></td>
+<td><xsl:value-of select="sections_in_currency.sale_trades_variation_margin"/></td>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
 </xsl:stylesheet>
