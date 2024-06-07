@@ -75,7 +75,15 @@
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="collateral_register"/>
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="collateral_position"/>
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="trades_position"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="fi_asset"/>
 
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="fi_for_trades"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="risk_vec_fi"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="spread_group_struct"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="spread_group"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="risk_param_spread_group"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="trade_sign"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="price_cor_fi"/>
                 
                 <h1>Ожидаемые результаты</h1>
                 <br/>
@@ -450,5 +458,194 @@
     </tbody>
   </table>
 </xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="fi_asset">
+  <table>
+    <caption>Финансовый инструмент – актив</caption>
+    <thead>
+      <tr>
+      <th>Идентификатор актива</th>
+      <th>Код актива</th>
+      <th>Код вида актива</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/fi_asset">
+  <tr>
+<td><xsl:value-of select="asset_id"/></td>
+<td><xsl:value-of select="asset_code"/></td>
+<td><xsl:value-of select="type_asset_code"/></td>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="fi_for_trades">
+  <table>
+    <caption>Финансовый инструмент для заключения сделок</caption>
+    <thead>
+      <tr>
+      <th>Идентификатор финансового инструмента для заключения сделок</th>
+      <th>Торговый код финансового инструмента</th>
+      <th>Код сегмента клиринга</th>
+      <th>Идентификатор базисного актива</th>
+      <th>Лот</th>
+      <th>Код валюты сделок по финансовому инструменту</th>
+      <th>Код типа финансового инструмента, предназначенного для заключения сделок</th>
+      <th>Идентификатор финансового инструмента первой части спреда</th>
+      <th>Идентификатор финансового инструмента второй части спреда</th>
+      <th>Расчетная цена</th>
+      <th>Точность</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/fi_for_trades">
+  <tr>
+<td><xsl:value-of select="fi_id"/></td>
+<td><xsl:value-of select="fi_trading_code"/></td>
+<td><xsl:value-of select="segment_code"/></td>
+<td><xsl:value-of select="basic_asset_id"/></td>
+<td><xsl:value-of select="item"/></td>
+<td><xsl:value-of select="trade_curr_code"/></td>
+<td><xsl:value-of select="fi_type"/></td>
+<td><xsl:value-of select="first_part_spread_fi_id"/></td>
+<td><xsl:value-of select="second_part_spread_fi_id"/></td>
+<td><xsl:value-of select="estimated_price"/></td>
+<td><xsl:value-of select="precision"/></td>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="risk_vec_fi">
+  <table>
+    <caption>Риск-вектор финансового инструмента</caption>
+    <thead>
+      <tr>
+      <th>Идентификатор спредовой группы</th>
+      <th>Код вида финансового инструмента</th>
+      <th>Идентификатор финансового инструмента для заключения сделок</th>
+      <th>Код вида риск-вектора</th>
+      <th>Значения</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/risk_vec_fi">
+  <tr>
+<td><xsl:value-of select="spread_group_id"/></td>
+<td><xsl:value-of select="fi_kind"/></td>
+<td><xsl:value-of select="fi_id"/></td>
+<td><xsl:value-of select="risk_vec_type_code"/></td>
+<xsl:text>[</xsl:text>
+<xsl:for-each select="fi_risk_vec_vals">
+	<xsl:value-of select="."/>
+	<xsl:if test="position() != last()">
+		<xsl:text>, </xsl:text>
+	</xsl:if>
+</xsl:for-each>
+<xsl:text>]</xsl:text>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="spread_group_struct">
+  <table>
+    <caption></caption>
+    <thead>
+      <tr>
+
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/spread_group_struct">
+  <tr>
+
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="spread_group">
+  <table>
+    <caption></caption>
+    <thead>
+      <tr>
+
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/spread_group">
+  <tr>
+
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="risk_param_spread_group">
+  <table>
+    <caption></caption>
+    <thead>
+      <tr>
+
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/risk_param_spread_group">
+  <tr>
+
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="trade_sign">
+  <table>
+    <caption></caption>
+    <thead>
+      <tr>
+
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/trade_sign">
+  <tr>
+
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="price_cor_fi">
+  <table>
+    <caption></caption>
+    <thead>
+      <tr>
+
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/price_cor_fi">
+  <tr>
+
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+
+
+
+
+
 
 </xsl:stylesheet>
