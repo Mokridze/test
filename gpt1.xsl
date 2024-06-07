@@ -69,9 +69,10 @@
                     
                 </xsl:for-each>
 <h1>TEST-1</h1>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="Organization"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="Portfolio"/>
-
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="organization"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="portfolio"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="positional_register"/>
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="collateral_register"/>
 
                 
                 <h1>Ожидаемые результаты</h1>
@@ -221,7 +222,7 @@
         </table>
     </xsl:template>
     
-<xsl:template match="//step[message_type='UploadStartData']" mode="Organization">
+<xsl:template match="//step[message_type='UploadStartData']" mode="organization">
   <table>
     <caption>Организация</caption>
     <thead>
@@ -257,7 +258,7 @@
   </table>
 </xsl:template>
 
-<xsl:template match="//step[message_type='UploadStartData']" mode="Portfolio">
+<xsl:template match="//step[message_type='UploadStartData']" mode="portfolio">
   <table>
     <caption>Портфель</caption>
     <thead>
@@ -291,6 +292,63 @@
   </table>
 </xsl:template>
 
-
+<xsl:template match="//step[message_type='UploadStartData']" mode="positional_register">
+  <table>
+    <caption>Позиционный регистр</caption>
+    <thead>
+      <tr>
+		<th>Организация участник клиринга</th>
+		<th>Идентификатор портфеля, в рамках которого открыт позиционный регистр</th>
+		<th>Идентификатор позиционного регистра</th>
+		<th>Тип позиционного регистра</th>
+		<th>Активный статус</th>
+		<th>Идентификатор портфеля, для которого открыт позиционный регистр </th>
+		<th>Идентификатор клиента участника торгов</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/positional_register">
+  <tr>
+	<td><xsl:value-of select="clearing_member_organization_id"/></td>
+	<td><xsl:value-of select="positional_register_opened_in_portfolio_id"/></td>
+	<td><xsl:value-of select="positional_register_id"/></td>
+	<td><xsl:value-of select="pos_reg_type"/></td>
+	<td><xsl:value-of select="is_active_status"/></td>
+	<td><xsl:value-of select="positional_register_for_portfolio_id"/></td>
+	<td><xsl:value-of select="trading_member_client_id"/></td>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
     
+	
+	<xsl:template match="//step[message_type='UploadStartData']" mode="collateral_register">
+  <table>
+    <caption>Регистр обеспечения</caption>
+    <thead>
+      <tr>
+      <th" >Идентификатор портфеля, в рамках которого открыт регистр обеспечения</th>
+      <th" >Идентификатор регистра обеспечения</th>
+      <th" >Код сегмента клиринга</th>
+      <th" >Проверка достаточности обеспечения</th>
+      <th" >Модель маржирования</th>
+      <th" >Организация участник клиринга</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/collateral_register">
+  <tr>
+<td><xsl:value-of select="collateral_register_opened_in_portfolio_id"/></td>
+<td><xsl:value-of select="collateral_register_id"/></td>
+<td><xsl:value-of select="segment_code"/></td>
+<td><xsl:value-of select="is_collateral_sufficiency_check"/></td>
+<td><xsl:value-of select="margin_model"/></td>
+<td><xsl:value-of select="clearing_member_organization_id"/></td>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+	
 </xsl:stylesheet>
