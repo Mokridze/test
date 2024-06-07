@@ -538,14 +538,14 @@
 <td><xsl:value-of select="fi_kind"/></td>
 <td><xsl:value-of select="fi_id"/></td>
 <td><xsl:value-of select="risk_vec_type_code"/></td>
-<xsl:text>[</xsl:text>
+<td><xsl:text>[</xsl:text>
 <xsl:for-each select="fi_risk_vec_vals">
 	<xsl:value-of select="."/>
 	<xsl:if test="position() != last()">
 		<xsl:text>, </xsl:text>
 	</xsl:if>
 </xsl:for-each>
-<xsl:text>]</xsl:text>
+<xsl:text>]</xsl:text></td>
   </tr>
             </xsl:for-each>
     </tbody>
