@@ -52,10 +52,9 @@
             </head>
             <body>
                 
-                <!-- Process all steps in the order they appear -->
+                
                 <h1>Стартовые данные</h1>
                 <br/>
-
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="organization"/>
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="portfolio"/>
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="positional_register"/>
@@ -70,21 +69,7 @@
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="risk_param_spread_group"/>
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="trade_sign"/>
 <xsl:apply-templates select="//step[message_type='UploadStartData']" mode="price_cor_fi"/>
-                
-                <h1>Ожидаемые результаты</h1>
-                <br/>
-                <xsl:for-each select="//step">
-                    <xsl:choose>
-                        <xsl:when test="message_type='OrderClearingCheck'">
-                            <h2><xsl:value-of select="description"/></h2>
-                            <xsl:apply-templates select="." mode="OrderClearingCheck"/>
-                        </xsl:when>
-                        <xsl:when test="message_type='GetAllCollateralPositions'">
-                            <h2><xsl:value-of select="description"/></h2>
-                            <xsl:apply-templates select="." mode="GetAllCollateralPositions"/>
-                        </xsl:when>
-                    </xsl:choose>
-                </xsl:for-each>
+
                 
 
                 
