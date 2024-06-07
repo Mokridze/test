@@ -380,15 +380,15 @@
 <td><xsl:value-of select="col_pos_type"/></td>
 <td><xsl:value-of select="asset_id"/></td>
 <td><xsl:value-of select="clearing_member_organization_id"/></td>
-<td><xsl:value-of select="reg_sec_in_units.incoming_pos"/></td>
-<td><xsl:value-of select="reg_sec_in_units.credited"/></td>
-<td><xsl:value-of select="reg_sec_in_units.written_off"/></td>
-<td><xsl:value-of select="reg_sec_in_units.def_obligations"/></td>
-<td><xsl:value-of select="reg_sec_in_units.funds_for_goods"/></td>
-<td><xsl:value-of select="reg_sec_in_units.current_pos"/></td>
-<td><xsl:value-of select="reg_sec_in_units.margin_requir_placed"/></td>
-<td><xsl:value-of select="reg_sec_in_units.margin_requir_current"/></td>
-<td><xsl:value-of select="reg_sec_in_units.margin_requir_unfull"/></td>
+<td><xsl:value-of select="reg_sec_in_units/incoming_pos"/></td>
+<td><xsl:value-of select="reg_sec_in_units/credited"/></td>
+<td><xsl:value-of select="reg_sec_in_units/written_off"/></td>
+<td><xsl:value-of select="reg_sec_in_units/def_obligations"/></td>
+<td><xsl:value-of select="reg_sec_in_units/funds_for_goods"/></td>
+<td><xsl:value-of select="reg_sec_in_units/current_pos"/></td>
+<td><xsl:value-of select="reg_sec_in_units/margin_requir_placed"/></td>
+<td><xsl:value-of select="reg_sec_in_units/margin_requir_current"/></td>
+<td><xsl:value-of select="reg_sec_in_units/margin_requir_unfull"/></td>
 
   </tr>
             </xsl:for-each>
@@ -429,22 +429,22 @@
 <td><xsl:value-of select="trades_position_opened_in_positional_register_id"/></td>
 <td><xsl:value-of select="trades_fi_id"/></td>
 <td><xsl:value-of select="clearing_member_organization_id"/></td>
-<td><xsl:value-of select="sections_in_units.incoming_position_on_purchase_trades"/></td>
-<td><xsl:value-of select="sections_in_units.incoming_position_on_sale_trades"/></td>
-<td><xsl:value-of select="sections_in_units.current_position_on_purchase_trades"/></td>
-<td><xsl:value-of select="sections_in_units.current_position_on_sale_trades"/></td>
-<td><xsl:value-of select="sections_in_units.purchase_orders_position"/></td>
-<td><xsl:value-of select="sections_in_units.sale_orders_position"/></td>
-<td><xsl:value-of select="sections_in_units.current_net_position"/></td>
-<td><xsl:value-of select="sections_in_currency.incoming_position_on_purchase_trades"/></td>
-<td><xsl:value-of select="sections_in_currency.incoming_position_on_sale_trades"/></td>
-<td><xsl:value-of select="sections_in_currency.current_position_on_purchase_trades"/></td>
-<td><xsl:value-of select="sections_in_currency.current_position_on_sale_trades"/></td>
-<td><xsl:value-of select="sections_in_currency.purchase_orders_position"/></td>
-<td><xsl:value-of select="sections_in_currency.sale_orders_position"/></td>
-<td><xsl:value-of select="sections_in_currency.current_net_position"/></td>
-<td><xsl:value-of select="sections_in_currency.purchase_trades_variation_margin"/></td>
-<td><xsl:value-of select="sections_in_currency.sale_trades_variation_margin"/></td>
+<td><xsl:value-of select="sections_in_units/incoming_position_on_purchase_trades"/></td>
+<td><xsl:value-of select="sections_in_units/incoming_position_on_sale_trades"/></td>
+<td><xsl:value-of select="sections_in_units/current_position_on_purchase_trades"/></td>
+<td><xsl:value-of select="sections_in_units/current_position_on_sale_trades"/></td>
+<td><xsl:value-of select="sections_in_units/purchase_orders_position"/></td>
+<td><xsl:value-of select="sections_in_units/sale_orders_position"/></td>
+<td><xsl:value-of select="sections_in_units/current_net_position"/></td>
+<td><xsl:value-of select="sections_in_currency/incoming_position_on_purchase_trades"/></td>
+<td><xsl:value-of select="sections_in_currency/incoming_position_on_sale_trades"/></td>
+<td><xsl:value-of select="sections_in_currency/current_position_on_purchase_trades"/></td>
+<td><xsl:value-of select="sections_in_currency/current_position_on_sale_trades"/></td>
+<td><xsl:value-of select="sections_in_currency/purchase_orders_position"/></td>
+<td><xsl:value-of select="sections_in_currency/sale_orders_position"/></td>
+<td><xsl:value-of select="sections_in_currency/current_net_position"/></td>
+<td><xsl:value-of select="sections_in_currency/purchase_trades_variation_margin"/></td>
+<td><xsl:value-of select="sections_in_currency/sale_trades_variation_margin"/></td>
   </tr>
             </xsl:for-each>
     </tbody>
