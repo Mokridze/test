@@ -554,16 +554,20 @@
 
 			<xsl:template match="//step[message_type='UploadStartData']" mode="spread_group_struct">
   <table>
-    <caption></caption>
+    <caption>Структура спредовой группы</caption>
     <thead>
       <tr>
-
+      <th>Идентификатор спредовой группы</th>
+      <th>Код вида финансового инструмента</th>
+      <th>Идентификатор финансового инструмента для заключения сделок</th>
       </tr>
     </thead>
     <tbody>
         <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/spread_group_struct">
   <tr>
-
+<td><xsl:value-of select="spread_group_id"/></td>
+<td><xsl:value-of select="fi_kind"/></td>
+<td><xsl:value-of select="fi_id"/></td>
   </tr>
             </xsl:for-each>
     </tbody>
@@ -572,16 +576,20 @@
 
 			<xsl:template match="//step[message_type='UploadStartData']" mode="spread_group">
   <table>
-    <caption></caption>
+  <caption>Спредовая группа</caption>
     <thead>
       <tr>
-
+      <th>Идентификатор спредовой группы</th>
+      <th>Сегмент клиринга </th>
+      <th>Код типа маржирвоания</th>
       </tr>
     </thead>
     <tbody>
         <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/spread_group">
   <tr>
-
+<td><xsl:value-of select="spread_group_id"/></td>
+<td><xsl:value-of select="clearing_segment"/></td>
+<td><xsl:value-of select="marg_type_code"/></td>
   </tr>
             </xsl:for-each>
     </tbody>
@@ -590,16 +598,22 @@
 
 			<xsl:template match="//step[message_type='UploadStartData']" mode="risk_param_spread_group">
   <table>
-    <caption></caption>
-    <thead>
-      <tr>
-
+  <caption>Риск параметры спредовой группы</caption>
+  <thead>
+    <tr>
+      <th>Идентификатор спредовой группы</th>
+      <th>Код вида риск-вектора</th>
+      <th>Метод определения наименьшего значения риск вектора</th>
+      <th>Номер наименьшего значения</th>
       </tr>
     </thead>
     <tbody>
         <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/risk_param_spread_group">
   <tr>
-
+<td><xsl:value-of select="spread_group_id"/></td>
+<td><xsl:value-of select="risk_vec_type_code"/></td>
+<td><xsl:value-of select="meth_det_min_code"/></td>
+<td><xsl:value-of select="min_num"/></td>
   </tr>
             </xsl:for-each>
     </tbody>
@@ -608,16 +622,20 @@
 
 			<xsl:template match="//step[message_type='UploadStartData']" mode="trade_sign">
   <table>
-    <caption></caption>
-    <thead>
-      <tr>
-
+  <caption>Признак сделки</caption>
+  <thead>
+    <tr>
+      <th>Признак сделки, которая должна быть заключена на основании данной заявки</th>
+      <th>Признак, проверять заявку на обеспеченность</th>
+      <th>Признак технической заявки</th>
       </tr>
     </thead>
     <tbody>
         <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/trade_sign">
   <tr>
-
+<td><xsl:value-of select="trade_sign_code"/></td>
+<td><xsl:value-of select="is_check_order_on_collateral"/></td>
+<td><xsl:value-of select="is_tech_order"/></td>
   </tr>
             </xsl:for-each>
     </tbody>
@@ -626,26 +644,24 @@
 
 			<xsl:template match="//step[message_type='UploadStartData']" mode="price_cor_fi">
   <table>
-    <caption></caption>
-    <thead>
-      <tr>
-
+  <caption>Ценовой коридор</caption>
+  <thead>
+    <tr>
+      <th>Идентификатор финансового инструмента для заключения сделок</th>
+      <th>Верхняя граница ценового коридора</th>
+      <th>Нижняя граница ценового коридора</th>
       </tr>
     </thead>
     <tbody>
         <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/price_cor_fi">
   <tr>
-
+<td><xsl:value-of select="fi_id"/></td>
+<td><xsl:value-of select="hi_board_price"/></td>
+<td><xsl:value-of select="lo_board_price"/></td>
   </tr>
             </xsl:for-each>
     </tbody>
   </table>
 </xsl:template>
-
-
-
-
-
-
 
 </xsl:stylesheet>
