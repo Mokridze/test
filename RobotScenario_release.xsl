@@ -3,7 +3,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
     <xsl:output method="html" indent="yes"/>
-    
+    <xsl:key name="steps-by-composite-key" match="step" use="concat(message_type, '|', action, '|', message//request_id, '|', message/child::*[1]/name())"/>
     <xsl:template match="/">
         <html>
             <head>
@@ -12,6 +12,7 @@
                     table {
                         width: 100%;
                         border-collapse: collapse;
+						margin-top: 30px;
                     }
                     th, td {
                         border: 1px solid black;
@@ -51,25 +52,99 @@
                 </style>
             </head>
             <body>
-                
-                
+                <h1><xsl:value-of select="//step[action[contains(text(),'start')]]/description"/></h1>
+                <!-- Выводим стартовые данные, с помощью if проверяем что сущность существует, в противном случае не выводим пустую таблицу-->
                 <h1>Стартовые данные</h1>
-                <br/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="organization"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="portfolio"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="positional_register"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="collateral_register"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="collateral_position"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="trades_position"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="fi_asset"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="fi_for_trades"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="risk_vec_fi"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="spread_group_struct"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="spread_group"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="risk_param_spread_group"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="trade_sign"/>
-<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="price_cor_fi"/>
+<xsl:if test="//step[message_type='UploadStartData']//organization">
+<xsl:apply-templates select="//step[message_type='UploadStartData']" mode="organization"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//portfolio"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="portfolio"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//positional_register"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="positional_register"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//collateral_register"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="collateral_register"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//collateral_position"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="collateral_position"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//trades_position"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="trades_position"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//fi_asset"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="fi_asset"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//fi_for_trades"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="fi_for_trades"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//risk_vec_fi"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="risk_vec_fi"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//spread_group_struct"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="spread_group_struct"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//spread_group"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="spread_group"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//risk_param_spread_group"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="risk_param_spread_group"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//trade_sign"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="trade_sign"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//price_cor_fi"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="price_cor_fi"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//cur_ex_rate"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="cur_ex_rate"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//delivery_controller"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="delivery_controller"/></xsl:if>
+<xsl:if test="//step[message_type='UploadStartData']//pers_risk_param"><xsl:apply-templates select="//step[message_type='UploadStartData']" mode="pers_risk_param"/></xsl:if>
 
+                
+				<h1>Список запросов сценария</h1>
+				
+  <table class="tcont countLines">
+    <thead>
+      <tr>
+        <th>Тип сообщения</th>
+        <th>Описание</th>
+        <th>Название сервиса</th>
+
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[action='send' and not(starts-with(message_type, 'Get'))]">
+  <tr>
+    <td><xsl:value-of select="message_type"/></td>
+    <td><xsl:value-of select="description"/></td>
+    <td><xsl:value-of select="service_name"/></td>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+<xsl:variable name="excludedMessageTypes" select="'CleanData UploadStartData SubscribeToResults BeginUploadStartData EndUploadStartData AllowRequestFromETS AllowRequestFromBO DisallowRequestFromETS DisallowRequestFromBO'"/>
+<xsl:variable name="collateralRequestPassed"/>
+<xsl:variable name="tradesRequestPassed"/>
+                <h1>Ожидаемые результаты</h1>
+                <br/>
+                <xsl:for-each select="//step[generate-id() = generate-id(key('steps-by-composite-key', concat(message_type, '|', action, '|', message//request_id, '|', message/child::*[1]/name())))]">
+                    <xsl:choose>
+                        <xsl:when test="message_type='AllPortfoliosCalculate'">
+                            <xsl:apply-templates select="." mode="AllPortfoliosCalculate"/>
+                        </xsl:when>
+                        <xsl:when test="message_type='OrderClearingCheck'">
+                            <xsl:apply-templates select="." mode="OrderClearingCheck"/>
+                        </xsl:when>
+                        <xsl:when test="message_type='GetAllCollateralPositions'">
+                            <h2><xsl:value-of select="message_type"/></h2>
+                            <xsl:apply-templates select="." mode="GetAllCollateralPositions"/>
+                        </xsl:when>
+                        <xsl:when test="message_type='GetQueueData' and message/collateral_position_with_request_id">
+                            <xsl:apply-templates select="." mode="GetQueueData_collateral"/>
+                        </xsl:when>
+						        <xsl:otherwise>
+            <xsl:choose>
+				<!-- убрать условие на сенд, после готовых трейдс и коллатерал позишн, никаких ресивов остаться не должно-->
+                <xsl:when test="not(contains(concat(' ', $excludedMessageTypes, ' '), concat(' ', message_type, ' '))) and not(contains('start end', action))">
+                    <h2><xsl:value-of select="description"/></h2>
+					<h3>NOT IMPLEMENTED</h3>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <xsl:for-each select="*">
+                                    <th><xsl:value-of select="name()"/></th>
+                                </xsl:for-each>
+                            </tr>
+                        </thead>
+                        <tbody>
+						<xsl:for-each select="key('steps-by-composite-key', concat(message_type, '|', action, '|', message//request_id, '|', message/child::*[1]/name()))">
+                            <tr>
+                                <xsl:for-each select="*">
+                                    <td><xsl:value-of select="."/></td>
+                                </xsl:for-each>
+                            </tr>
+							</xsl:for-each>
+                        </tbody>
+                    </table>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
                 
 
                 
@@ -77,79 +152,169 @@
         </html>
     </xsl:template>
     
-    <!-- Template for OrderClearingCheck in mode OrderClearingCheck -->
-    <xsl:template match="step" mode="OrderClearingCheck">
+    <!-- Templates for requests -->
+	
+    <xsl:template match="step" mode="GetQueueData_collateral">
+	<h2>Проверка позиции по обеспечению в очереди результатов</h2>
         <table>
             <caption>Запрос</caption>
             <thead>
                 <tr>
-                    <th class="col_heading level0">Описание</th>
-                    <th class="col_heading level0">Тип сообщения</th>
-                    <th class="col_heading level0">Операция</th>
-                    <th class="col_heading level0">id запроса</th>
-                    <th class="col_heading level0">id соединения</th>
-                    <th class="col_heading level0">Идентификатор заявки</th>
-                    <th class="col_heading level0">отправлено.seconds</th>
-                    <th class="col_heading level0">отправлено.nanos</th>
-                    <th class="col_heading level0">Направление заявки</th>
-                    <th class="col_heading level0">Идентификатор организации – участника торгов, подавшего заявку</th>
-                    <th class="col_heading level0">Идентификатор позиционного регистра, с указанием которого подана заявка</th>
-                    <th class="col_heading level0">Идентификатор финансового инструмента для заключения сделок</th>
-                    <th class="col_heading level0">Вид заявки</th>
-                    <th class="col_heading level0">Цена за единицу базисного актива финансового инструмента</th>
-                    <th class="col_heading level0">Количество единиц финансового инструмента в заявке</th>
-                    <th class="col_heading level0">Признак сделки, которая должна быть заключена на основании данной заявки</th>
-                    <th class="col_heading level0">Позиционный регистр стороны по договору поставки</th>
-                    <th class="col_heading level0">Организация участник клиринга</th>
-                    <th class="col_heading level0">Первая часть спреда.Идентификатор финансового инструмента для заключения сделок</th>
-                    <th class="col_heading level0">Первая часть спреда.Направление заявки</th>
-                    <th class="col_heading level0">Первая часть спреда.Цена за единицу базисного актива финансового инструмента</th>
-                    <th class="col_heading level0">Первая часть спреда.Количество единиц финансового инструмента в заявке</th>
-                    <th class="col_heading level0">Первая часть спреда.Признак сделки, которая должна быть заключена на основании данной заявки</th>
-                    <th class="col_heading level0">Вторая часть спреда.Идентификатор финансового инструмента для заключения сделок</th>
-                    <th class="col_heading level0">Вторая часть спреда.Направление заявки</th>
-                    <th class="col_heading level0">Вторая часть спреда.Цена за единицу базисного актива финансового инструмента</th>
-                    <th class="col_heading level0">Вторая часть спреда.Количество единиц финансового инструмента в заявке</th>
-                    <th class="col_heading level0">Вторая часть спреда.Признак сделки, которая должна быть заключена на основании данной заявки</th>
-                    <th class="col_heading level0">Торговый код инструмента</th>
-                    <th class="col_heading level0">отправлено.seconds</th>
-                    <th class="col_heading level0">отправлено.nanos</th>
+		<th></th>
+      <th>Тип сообщения</th>
+	  <th>Описание</th>
+      <th>Операция</th>
+	  <th>Имя сервиса</th>
+      <th>id запроса</th>
+	  <th>Организация участник клиринга</th>
+      <th>Идентификатор регистра обеспечения, в рамках которого открыта позиция по обеспечению</th>
+      <th>Вид позиции по обеспечению</th>
+      <th>Идентификатор актива</th>
+      <th>единицы актива.входящая позиция</th>
+      <th>единицы актива.зачислено</th>
+      <th>единицы актива.списано</th>
+      <th>единицы актива.отложенные обязательства</th>
+      <th>единицы актива.средства под оплату товара</th>
+      <th>единицы актива.текущая позиция</th>
+      <th>единицы актива.маржинальное требование выставленное</th>
+      <th>единицы актива.маржинальное требование текущее</th>
+      <th>единицы актива.маржинальное требование неисполненное</th>
+      
+                </tr>
+            </thead>
+            <tbody>
+			<xsl:for-each select="key('steps-by-composite-key', concat(message_type, '|', action, '|', message//request_id, '|', message/child::*[1]/name()))">
+                <tr>
+				<td><xsl:value-of select="execute"/></td>
+                    <td><xsl:value-of select="message_type"/></td>
+                    <td><xsl:value-of select="description"/></td>
+                    <td><xsl:value-of select="action"/></td>
+					<td><xsl:value-of select="service_name"/></td>
+					<td><xsl:value-of select="message/collateral_position_with_request_id/request_id"/></td>
+					
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/clearing_member_organization_id"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/collateral_position_opened_in_collateral_register_id"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/col_pos_type"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/asset_id"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/reg_sec_in_units/incoming_pos"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/reg_sec_in_units/credited"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/reg_sec_in_units/written_off"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/reg_sec_in_units/def_obligations"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/reg_sec_in_units/funds_for_goods"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/reg_sec_in_units/current_pos"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/reg_sec_in_units/margin_requir_placed"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/reg_sec_in_units/margin_requir_current"/></td>
+<td><xsl:value-of select="message/collateral_position_with_request_id/collateral_position/reg_sec_in_units/margin_requir_unfull"/></td>
+
+                </tr>
+				</xsl:for-each>
+            </tbody>
+        </table>
+    </xsl:template>
+
+    <xsl:template match="step" mode="AllPortfoliosCalculate">
+	<h2>Рассчитать обеспеченность всех портфелей</h2>
+        <table>
+            <caption>Запрос</caption>
+            <thead>
+                <tr>
+					<th>Тип сообщения</th>
+                    <th>Описание</th>
+                    <th>Операция</th>
+                    <th>id запроса</th>
+                    <th>id соединения</th>
+                    <th>отправлено.seconds</th>
+                    <th>отправлено.nanos</th>
+
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th class="row_heading level0"></th>
-                    <td class="data"><xsl:value-of select="description"/></td>
-                    <td class="data"></td>
-                    <td class="data"></td>
-                    <td class="data"><xsl:value-of select="message/request_id"/></td>
-                    <td class="data"><xsl:value-of select="message/connection_id"/></td>
-                    <td class="data"><xsl:value-of select="message/order/order_id"/></td>
-                    <td class="data"><xsl:value-of select="message/order/applying_at/seconds"/></td>
-                    <td class="data"><xsl:value-of select="message/order/applying_at/nanos"/></td>
-                    <td class="data"><xsl:value-of select="message/order/order_direction"/></td>
-                    <td class="data"><xsl:value-of select="message/order/placed_order_by_trading_member_organization_id"/></td>
-                    <td class="data"><xsl:value-of select="message/order/placed_order_from_positional_register_id"/></td>
-                    <td class="data"><xsl:value-of select="message/order/fi_id"/></td>
-                    <td class="data"><xsl:value-of select="message/order/order_kind"/></td>
-                    <td class="data"><xsl:value-of select="message/order/set_in_order_fi_for_trade_base_asset_price"/></td>
-                    <td class="data"><xsl:value-of select="message/order/volume_in_lots"/></td>
-                    <td class="data"><xsl:value-of select="message/order/trade_sign_code"/></td>
-                    <td class="data"><xsl:value-of select="message/order/contract_delivery_party_with_positional_register_id"/></td>
-                    <td class="data"><xsl:value-of select="message/order/clearing_member_organization_id"/></td>
-                    <td class="data"><xsl:value-of select="message/order/first_part_spread/fi_id"/></td>
-                    <td class="data"><xsl:value-of select="message/order/first_part_spread/order_direction"/></td>
-                    <td class="data"><xsl:value-of select="message/order/first_part_spread/set_in_order_fi_base_asset_price"/></td>
-                    <td class="data"><xsl:value-of select="message/order/first_part_spread/volume_in_lots"/></td>
-                    <td class="data"><xsl:value-of select="message/order/first_part_spread/trade_sign_code"/></td>
-                    <td class="data"><xsl:value-of select="message/order/second_part_spread/fi_id"/></td>
-                    <td class="data"><xsl:value-of select="message/order/second_part_spread/order_direction"/></td>
-                    <td class="data"><xsl:value-of select="message/order/second_part_spread/set_in_order_fi_base_asset_price"/></td>
-                    <td class="data"><xsl:value-of select="message/order/second_part_spread/volume_in_lots"/></td>
-                    <td class="data"><xsl:value-of select="message/order/second_part_spread/trade_sign_code"/></td>
-                    <td class="data"><xsl:value-of select="message/order/trade_code"/></td>
-                    <td class="data"><xsl:value-of select="message/order/applying_at/seconds"/></td>
-                    <td class="data"><xsl:value-of select="message/order/applying_at/nanos"/></td>
+                    <td><xsl:value-of select="message_type"/></td>
+                    <td><xsl:value-of select="description"/></td>
+                    <td><xsl:value-of select="action"/></td>
+					<td><xsl:value-of select="message/request_id"/></td>
+					<td><xsl:value-of select="message/connection_id"/></td>
+					<td><xsl:value-of select="message/sent_to_clearing_at/seconds"/></td>
+                    <td><xsl:value-of select="message/sent_to_clearing_at/nanos"/></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </xsl:template>
+
+    <xsl:template match="step" mode="OrderClearingCheck">
+	<h2>Проверка регистрации заявки</h2>
+        <table>
+            <caption>Запрос</caption>
+            <thead>
+                <tr>
+                    <th>Описание</th>
+                    <th>Тип сообщения</th>
+                    <th>Операция</th>
+                    <th>id запроса</th>
+                    <th>id соединения</th>
+                    <th>Идентификатор заявки</th>
+                    <th>отправлено.seconds</th>
+                    <th>отправлено.nanos</th>
+                    <th>Направление заявки</th>
+                    <th>Идентификатор организации – участника торгов, подавшего заявку</th>
+                    <th>Идентификатор позиционного регистра, с указанием которого подана заявка</th>
+                    <th>Идентификатор финансового инструмента для заключения сделок</th>
+                    <th>Вид заявки</th>
+                    <th>Цена за единицу базисного актива финансового инструмента</th>
+                    <th>Количество единиц финансового инструмента в заявке</th>
+                    <th>Признак сделки, которая должна быть заключена на основании данной заявки</th>
+                    <th>Позиционный регистр стороны по договору поставки</th>
+                    <th>Организация участник клиринга</th>
+                    <th>Первая часть спреда.Идентификатор финансового инструмента для заключения сделок</th>
+                    <th>Первая часть спреда.Направление заявки</th>
+                    <th>Первая часть спреда.Цена за единицу базисного актива финансового инструмента</th>
+                    <th>Первая часть спреда.Количество единиц финансового инструмента в заявке</th>
+                    <th>Первая часть спреда.Признак сделки, которая должна быть заключена на основании данной заявки</th>
+                    <th>Вторая часть спреда.Идентификатор финансового инструмента для заключения сделок</th>
+                    <th>Вторая часть спреда.Направление заявки</th>
+                    <th>Вторая часть спреда.Цена за единицу базисного актива финансового инструмента</th>
+                    <th>Вторая часть спреда.Количество единиц финансового инструмента в заявке</th>
+                    <th>Вторая часть спреда.Признак сделки, которая должна быть заключена на основании данной заявки</th>
+                    <th>Торговый код инструмента</th>
+                    <th>отправлено.seconds</th>
+                    <th>отправлено.nanos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><xsl:value-of select="description"/></td>
+                    <td></td>
+                    <td></td>
+                    <td><xsl:value-of select="message/request_id"/></td>
+                    <td><xsl:value-of select="message/connection_id"/></td>
+                    <td><xsl:value-of select="message/order/order_id"/></td>
+                    <td><xsl:value-of select="message/order/applying_at/seconds"/></td>
+                    <td><xsl:value-of select="message/order/applying_at/nanos"/></td>
+                    <td><xsl:value-of select="message/order/order_direction"/></td>
+                    <td><xsl:value-of select="message/order/placed_order_by_trading_member_organization_id"/></td>
+                    <td><xsl:value-of select="message/order/placed_order_from_positional_register_id"/></td>
+                    <td><xsl:value-of select="message/order/fi_id"/></td>
+                    <td><xsl:value-of select="message/order/order_kind"/></td>
+                    <td><xsl:value-of select="message/order/set_in_order_fi_for_trade_base_asset_price"/></td>
+                    <td><xsl:value-of select="message/order/volume_in_lots"/></td>
+                    <td><xsl:value-of select="message/order/trade_sign_code"/></td>
+                    <td><xsl:value-of select="message/order/contract_delivery_party_with_positional_register_id"/></td>
+                    <td><xsl:value-of select="message/order/clearing_member_organization_id"/></td>
+                    <td><xsl:value-of select="message/order/first_part_spread/fi_id"/></td>
+                    <td><xsl:value-of select="message/order/first_part_spread/order_direction"/></td>
+                    <td><xsl:value-of select="message/order/first_part_spread/set_in_order_fi_base_asset_price"/></td>
+                    <td><xsl:value-of select="message/order/first_part_spread/volume_in_lots"/></td>
+                    <td><xsl:value-of select="message/order/first_part_spread/trade_sign_code"/></td>
+                    <td><xsl:value-of select="message/order/second_part_spread/fi_id"/></td>
+                    <td><xsl:value-of select="message/order/second_part_spread/order_direction"/></td>
+                    <td><xsl:value-of select="message/order/second_part_spread/set_in_order_fi_base_asset_price"/></td>
+                    <td><xsl:value-of select="message/order/second_part_spread/volume_in_lots"/></td>
+                    <td><xsl:value-of select="message/order/second_part_spread/trade_sign_code"/></td>
+                    <td><xsl:value-of select="message/order/trade_code"/></td>
+                    <td><xsl:value-of select="message/order/applying_at/seconds"/></td>
+                    <td><xsl:value-of select="message/order/applying_at/nanos"/></td>
                 </tr>
             </tbody>
         </table>
@@ -158,6 +323,7 @@
     <!-- Template for GetAllCollateralPositions in mode GetAllCollateralPositions -->
     <xsl:template match="step" mode="GetAllCollateralPositions">
         <table>
+		<thead>
             <tr>
                 <th>Execute</th>
                 <th>Service Name</th>
@@ -179,6 +345,8 @@
                 <th>Margin Requirement Unfulfilled</th>
                 <th>Clearing Member Organization ID</th>
             </tr>
+			</thead>
+			<tbody>
             <tr>
                 <td><xsl:value-of select="execute"/></td>
                 <td><xsl:value-of select="service_name"/></td>
@@ -200,6 +368,7 @@
                 <td><xsl:value-of select="message/collateral_position/reg_sec_in_units/margin_requir_unfull"/></td>
                 <td><xsl:value-of select="message/collateral_position/clearing_member_organization_id"/></td>
             </tr>
+			</tbody>
         </table>
     </xsl:template>
     
@@ -634,5 +803,80 @@
     </tbody>
   </table>
 </xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="cur_ex_rate">
+  <table>
+  <caption>Курс валюты</caption>
+  <thead>
+    <tr>
+      <th>Код актива</th>
+<th>Центральное значение</th>
+<th>Точность</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/cur_ex_rate">
+  <tr>
+<td><xsl:value-of select="asset_code"/></td>
+<td><xsl:value-of select="not_base_cur_mid_val"/></td>
+<td><xsl:value-of select="precision "/></td>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="delivery_controller">
+  <table>
+  <caption>Контролер поставки</caption>
+  <thead>
+    <tr>
+      <th>id участника клиринга </th>
+<th>id финансового инструмента </th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/delivery_controller">
+  <tr>
+  <td><xsl:value-of select="clearing_member_organization_id "/></td>
+<td><xsl:value-of select="fi_id"/></td>
+
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+			<xsl:template match="//step[message_type='UploadStartData']" mode="pers_risk_param">
+  <table>
+  <caption>Индивидуальные риск-параметры</caption>
+  <thead>
+    <tr>
+      <th>Идентификатор портфеля 2-го или 3-го уровня</th>
+<th>Идентификатор спредовой группы</th>
+<th>Код вида риск-вектора</th>
+<th>Порядковый номер наименьшего значения</th>
+<th>id организации – участника клиринга, для которого открыт портфель</th>
+<th>идентификатор шарда</th>
+      </tr>
+    </thead>
+    <tbody>
+        <xsl:for-each select = "//step[message_type='UploadStartData']/message/data/pers_risk_param">
+  <tr>
+<td><xsl:value-of select="portfolio_id"/></td>
+<td><xsl:value-of select="spread_group_id"/></td>
+<td><xsl:value-of select="risk_vec_type_code"/></td>
+<td><xsl:value-of select="pers_risk_param_num"/></td>
+<td><xsl:value-of select="clearing_member_organization_id"/></td>
+<td><xsl:value-of select="bucket_id"/></td>
+  </tr>
+            </xsl:for-each>
+    </tbody>
+  </table>
+</xsl:template>
+
+
+
+
 
 </xsl:stylesheet>
